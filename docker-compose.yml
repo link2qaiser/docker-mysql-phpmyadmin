@@ -1,26 +1,40 @@
-version: "3.3"
+version: '3'
+
+networks:
+    mysql-phpmyadmin:
+        name: mysql-phpmyadmin
+        # use the bridge driver
+        driver: bridge
 
 services:
-  database:
-    container_name: ${APP_NAME}
-    image: mysql:8.0
-    ports:
-      -   3306:3306
-    environment:
-      - MYSQL_DATABASE=default
-      - MYSQL_USER=laravel
-      - MYSQL_PASSWORD=secret
-      - MYSQL_ROOT_PASSWORD=secret
-    volumes:
-      - db-data:/var/lib/mysql
+    mysql:
+        image: mysql:8.0
+        container_name: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root_password
+            MYSQL_DATABASE: database_name
+            MYSQL_USER: user_name
+            MYSQL_PASSWORD: user_password
+        ports:
+            - "3306:3306"
+        volumes:
+            - /home/dixeam/1:/var/lib/mysql
+        networks:
+            mysql-phpmyadmin:
+                aliases:
+                - mysql
 
-  phpmyadmin:
-    depends_on:
-      - database
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "8090:80"
-    environment:
-      PMA_HOST: database
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    phpmyadmin:
+        image: phpmyadmin:5.2.0
+        container_name: phpmyadmin
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - 8081:80
+        networks:
+            mysql-phpmyadmin:
+                aliases:
+                - phpmyadmin
