@@ -1,6 +1,7 @@
 # Used for prod build.
-FROM mysql:8.0 as mysql
+FROM mysql:8.0-debian
 
+COPY ./docker/mysql/my.cnf /etc/mysql/my.cnf
 # Install dependencies.
-RUN apt-get update && apt-get install -y unzip libpq-dev libcurl4-gnutls-dev nginx libonig-dev
+RUN apt-get update
 
