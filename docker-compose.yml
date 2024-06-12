@@ -19,6 +19,9 @@ services:
     networks:
       - mysql-network
   phpmyadmin:
+    build:
+      context: .
+      dockerfile: PHPMyadminDockerfile
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin_container
     environment:
