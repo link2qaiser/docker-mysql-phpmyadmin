@@ -27,6 +27,7 @@ services:
     environment:
       PMA_HOST: mysql_container
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      UPLOAD_LIMIT: 300M
     ports:
       - "${PHPMYADMIN_PORT}:80"
     depends_on:
