@@ -30,6 +30,8 @@ services:
       - mysql
     networks:
       - mysql-network
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
 
 volumes:
   mysql-data:
