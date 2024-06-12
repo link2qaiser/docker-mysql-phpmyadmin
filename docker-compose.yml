@@ -17,7 +17,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - app-network
+      - mysql-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin_container
@@ -29,11 +29,11 @@ services:
     depends_on:
       - mysql
     networks:
-      - app-network
+      - mysql-network
 
 volumes:
   mysql-data:
 
 networks:
-  app-network:
+  mysql-network:
     external: true
