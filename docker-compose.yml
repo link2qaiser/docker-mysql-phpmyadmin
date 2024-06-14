@@ -28,8 +28,10 @@ services:
       PMA_HOST: mysql_container
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       UPLOAD_LIMIT: 300M
-    ports:
-      - "${PHPMYADMIN_PORT}:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpmyadmin_container.rule=Host(`phpmyadmin.dixeam.com`)"
+      - "traefik.http.services.phpmyadmin_container.loadbalancer.server.port=80"
     depends_on:
       - mysql
     networks:
